@@ -1,4 +1,4 @@
-rm(list = ls())
+#rm(list = ls())
 
 if(!require("rstudioapi")){
   install.packages("rstudioapi")
@@ -20,6 +20,11 @@ if(!require("stringi")){
   install.packages("stringi")
   library("stringi")
 }
+if(!require("shinythemes")){
+  install.packages("shinythemes")
+  library("shinythemes")
+}
+
 
 get_directory = function(){
   args <- commandArgs(trailingOnly = FALSE)
@@ -38,67 +43,13 @@ get_directory = function(){
   }
 }
 
-wd = get_directory()
-setwd(wd)
+# wd = get_directory()
+# setwd(wd)
 
 source("fileoperation.R")
 source("get_poem.R")
 source("make_dict.R")
 source("compose.R")
 source("adv_compose.R")
-
-
-
-ui <- fluidPage(
-  
-  titlePanel("Keyword Poet"),
-  
-  navbarPage("",
-           
-           tabPanel("Lookup",
-                    
-                    sidebarLayout(
-                      sidebarPanel(
-                        textInput("keyword", "Input your Keyword", value = ""),
-                        tags$p("Input the keyword of the poem to find the best match...\n"),
-                        radioButtons("if_multiple", "Multiple Output Allowance", 
-                                     choiceNames = list("Single Output", "Multiple Output"),
-                                     choiceValues = list(FALSE, TRUE))
-                      ),
-                      mainPanel(
-                        tags$h3("Output"),
-                        uiOutput("poem")
-                      )
-                    )
-                    
-                    ),
-           
-           tabPanel("Compose"
-                    
-                    
-                    
-                    
-                    )
-           
-           
-           
-           )
-  
-
-)
-
-server <- function(input, output, session) {
-  
-  output$poem = renderUI({
-    
-    keywd = as.character(input$keyword)
-    tags$blockquote(
-      paste_together(get_poem(keywd, multiple = input$if_multiple))
-      )
-    
-   })
-  
-}
-
-shinyApp(ui, server)
-
+source("ui.R")
+source("server.R")

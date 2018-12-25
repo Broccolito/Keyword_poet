@@ -85,13 +85,15 @@ unique.type = function(){
 }
 
 #Paste all the strings in vectors together as one string
-paste_together = function(string_vec){
+paste_together = function(string_vec, with = "----------"){
   if(any(!is.vector(string_vec), !is.character(string_vec))){
     return(NULL)
   }
   res_string = ""
-  for(i in string_vec){
-    res_string = paste(res_string, i, sep = "----------")
-  }
+  try({
+    for(i in string_vec){
+      res_string = paste(res_string, i, sep = with)
+    }
+  }, silent = TRUE)
   return(res_string)
 }

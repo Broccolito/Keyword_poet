@@ -71,3 +71,13 @@ print.rand.poem = function(char = 5,sent = 4){
     print(create.sent(char))
   }
 }
+
+create.rand.poem = function(char = 5,sent = 4){
+  stopifnot(exists("wk"))
+  stopifnot(exists("wktag"))
+  poem = ""
+  for(i in 1:sent){
+    poem = paste(poem, create.sent(n = char), sep = "\n")
+  }
+  return(poem)
+}
